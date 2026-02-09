@@ -30,3 +30,11 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean)
     ' Hentikan auto refresh saat file ditutup
     Call StopAutoRefresh
 End Sub
+
+dari sini
+
+let
+    Source = OData.Feed("https://forms.office.com/formapi/api/[YOUR_FORM_ID]/responses"),
+    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+in
+    #"Promoted Headers"
