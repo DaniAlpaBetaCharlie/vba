@@ -1,0 +1,32 @@
+rumus module
+Public RunWhen As Double
+
+Sub AutoRefresh()
+    ' Simpan workbook
+    ThisWorkbook.Save
+    
+    ' Optional: Refresh semua koneksi data eksternal jika ada
+    ' ThisWorkbook.RefreshAll
+    
+    ' Jadwalkan refresh berikutnya dalam 5 detik
+    RunWhen = Now + TimeSerial(0, 0, 5)
+    Application.OnTime RunWhen, "AutoRefresh"
+End Sub
+
+Sub StopAutoRefresh()
+    ' Untuk menghentikan auto refresh
+    On Error Resume Next
+    Application.OnTime RunWhen, "AutoRefresh", , False
+End Sub
+
+
+rumus thisworkbook
+Private Sub Workbook_Open()
+    ' Jalankan auto refresh saat file dibuka
+    Call AutoRefresh
+End Sub
+
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+    ' Hentikan auto refresh saat file ditutup
+    Call StopAutoRefresh
+End Sub
